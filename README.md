@@ -8,9 +8,11 @@ Guha Roy, A., Conjeti, S., Navab, N., and Wachinger, C. 2018. QuickNAT: Segmenti
 
 Link to paper: https://arxiv.org/abs/1801.04161
 
-Tensorflow Implementation of QuickNAT is contributed by [IshmeetKaur](https://github.com/IshmeetKaur/QuickNAT_tensorflow)
+Tensorflow Implementation is contributed by [IshmeetKaur](https://github.com/IshmeetKaur/QuickNAT_tensorflow)
+Pytorch Implementation is contributed by [Shayan Ahmad Siddiqui](https://github.com/ai-med/quickNAT_pytorch)
 
 ## Changes
 - Add the matlab code create_wholedataset.m to build imdb structure for this project. 
 - Provide the code to remap the labels of OASIS data in order to reduce the total number of classes.
-- 
+- Provide the code to calculate the class weights for the weighted_cross_entrophy.
+- Add more comments on the original tensorflow code to help understand. 
