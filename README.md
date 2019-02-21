@@ -9,6 +9,7 @@ Guha Roy, A., Conjeti, S., Navab, N., and Wachinger, C. 2018. QuickNAT: Segmenti
 Link to paper: https://arxiv.org/abs/1801.04161
 
 Tensorflow Implementation is contributed by [IshmeetKaur](https://github.com/IshmeetKaur/QuickNAT_tensorflow)
+
 Pytorch Implementation is contributed by [Shayan Ahmad Siddiqui](https://github.com/ai-med/quickNAT_pytorch)
 
 ### Changes
