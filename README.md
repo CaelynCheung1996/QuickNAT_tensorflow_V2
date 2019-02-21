@@ -22,11 +22,11 @@ Simple to run!
 ----------------------------
 ### Run in cluster
 
-Request a interative CHPC GPU node
+- Request a interative CHPC GPU node
 ```
 qsub -I -l nodes=1:ppn=1:gpus=1:V100,walltime=1:00:00
 ```
-Load the module for CUDA, Sigularity and run tensorflow
+- Load the module for CUDA, Sigularity and run tensorflow
 ```
 module load cuda-8.0
 module load singularity-2.4.2
@@ -34,18 +34,18 @@ singularity exec --nv /export/tensorflow-1.7.0/test/ubuntu_tf_gpu python3 /home/
 ```
 ### Run in local machine
 
-After activating Tensorflow environment, simply run
+- After activating Tensorflow environment, simply run
 ```
 python3 training.py 
 ```
-Testing
+- Testing
 ```
 python3 testing.py
 ```
 
 Troubleshooting
 -------------------
-- The error was shown as 'Unable to create file (file locking disabled on this file system (use HDF5_USE_FILE_LOCKING environment variable to override)' can be solved by add the flag:
+- The error was shown as 'Unable to create file (file locking disabled on this file system (use HDF5_USE_FILE_LOCKING environment variable to override)' can be solved by adding the flag:
 ```
 export HDF5_USE_FILE_LOCKING=FALSE
 ```
