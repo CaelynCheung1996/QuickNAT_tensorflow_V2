@@ -21,11 +21,11 @@ Link to paper: https://arxiv.org/abs/1801.04161
 ### Simple to Run!
 ### Training
 After activating Tensorflow environment, simply run
-'''
+```
 python3 training.py 
-'''
+```
 
 ### Testing
-'''
+```
 python3 testing.py
-'''
+```
