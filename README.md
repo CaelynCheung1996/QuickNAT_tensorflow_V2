@@ -18,7 +18,8 @@ Link to paper: https://arxiv.org/abs/1801.04161
 - Provide the code to calculate the class weights for the weighted_cross_entrophy.
 - Add more comments on the original tensorflow code to help understand. 
 
-### Simple to Run!
+### Simple to run!
+----------------------------
 ### Run in cluster
 ### Request a interative CHPC GPU node
 ```
