@@ -22,7 +22,7 @@ def dice_coef_(y_pred, y_true):
         float: IOU score
     """
     H, W, num_classes = y_pred.get_shape().as_list()[1:]
-    pred_flat = tf.reshape(y_pred, [-1, H * W, num_classes])  # since 3 is the number of classes
+    pred_flat = tf.reshape(y_pred, [-1, H * W, num_classes])  # since 5 is the number of classes
     true_flat = tf.reshape(y_true, [-1, H * W, num_classes])
     intersection = 2 * tf.reduce_sum(pred_flat * true_flat, axis=1) + smooth  # shape(batch,row,width,num_classes)
     denominator = tf.reduce_sum(pred_flat, axis=1) + tf.reduce_sum(true_flat,
@@ -31,7 +31,7 @@ def dice_coef_(y_pred, y_true):
 
 
 # %%WEIGHTED-DICE-COEFFICIENT
-def dice_coef_weighted_(y_pred, y_true,num_classes=3):
+def dice_coef_weighted_(y_pred, y_true,num_classes=5):
     """Returns a (approx) IOU score
    IOU = 2 * intersection / (y_pred.sum() + y_true.sum() + 1e-7) + 1e-7
     Args:
@@ -41,7 +41,7 @@ def dice_coef_weighted_(y_pred, y_true,num_classes=3):
         float: IOU score
     """
     H, W, num_classes = y_pred.get_shape().as_list()[1:]
-    med_bal_factor = [1,1,1]
+    med_bal_factor = [1,1,1,1,1]
     intersection, denominator = 0, 0
     for i in range(num_classes):
         intersection += med_bal_factor[i] * tf.reduce_sum(y_pred[:, :, :, i] * y_true[:, :, :, i])
@@ -53,7 +53,7 @@ def dice_coef_weighted_(y_pred, y_true,num_classes=3):
 # %%CLASS-WISE-DICE
 def dice_coef_axis(y_pred, y_true, i):
     intersection, union = 0, 0
-    med_bal_factor = [1, 1, 1]  # For testing
+    med_bal_factor = [1, 1, 1, 1, 1]  # For testing
     intersection += med_bal_factor[i] * (tf.reduce_sum(y_true[:, :, :, i] * y_pred[:, :, :, i]))
     union += med_bal_factor[i] * (tf.reduce_sum(y_true[:, :, :, i] + y_pred[:, :, :, i]))
     dice_coef = ((2. * intersection + smooth) / (union + smooth))
@@ -63,17 +63,30 @@ def dice_coef_axis(y_pred, y_true, i):
 def dice_coef_0(y_pred, y_true):
     return dice_coef_axis(y_pred, y_true, 0)
 
+# TO BE CONFIRMED !!!
+#def dice_coef_1(y_true, y_pred):
+#    return dice_coef_axis(y_pred, y_true, 1)
+#
+#def dice_coef_2(y_true, y_pred):
+#    return dice_coef_axis(y_pred, y_true, 2)
+#
+#def dice_coef_3(y_true, y_pred):
+#    return dice_coef_axis(y_pred, y_true, 3)
+#
+#def dice_coef_4(y_true, y_pred):
+#    return dice_coef_axis(y_pred, y_true, 4)
 
-def dice_coef_1(y_true, y_pred):
+def dice_coef_1(y_pred, y_true):
     return dice_coef_axis(y_pred, y_true, 1)
 
-
-def dice_coef_2(y_true, y_pred):
+def dice_coef_2(y_pred, y_true):
     return dice_coef_axis(y_pred, y_true, 2)
 
-def dice_coef_3(y_true, y_pred):
+def dice_coef_3(y_pred, y_true):
     return dice_coef_axis(y_pred, y_true, 3)
 
+def dice_coef_4(y_pred, y_true):
+    return dice_coef_axis(y_pred, y_true, 4)
 
 def compute_cross_entropy_mean(y_pred, y_true):
     # https://stackoverflow.com/questions/44560549/unbalanced-data-and-weighted-cross-entropy
@@ -81,7 +94,7 @@ def compute_cross_entropy_mean(y_pred, y_true):
     return total_loss
 
 
-def weighted_cross_entropy(y_pred, y_true, num_classes):
+def weighted_cross_entropy(y_pred, y_true, num_classes=5):
     '''
     @@@ From https://github.com/kwotsin/TensorFlow-ENet/blob/master/train_enet.py#L103
     ------------------
@@ -99,17 +112,15 @@ def weighted_cross_entropy(y_pred, y_true, num_classes):
     - loss(Tensor): a scalar Tensor that is the weighted cross entropy loss output.
     '''
     #class weights
-    if num_classes == 3:
-        class_weights = [0.014,0.49,0.49]#
-    if num_classes == 2:
-        class_weights = [1, 1]  # [0.3,3.04]#
+    if num_classes == 5:
+        class_weights = [0.04,0.16,0.14,0.32,0.34] # log(total voxels/voxel of category),normalized
     weights = y_true * class_weights
-    sample_weights = tf.reduce_sum(tf.multiply(y_true, class_weights), 3)
+    sample_weights = tf.reduce_sum(tf.multiply(y_true, class_weights), 3) # check 3
     loss = tf.losses.softmax_cross_entropy(onehot_labels=y_true, logits=y_pred, weights=sample_weights)
     return loss
 
 
-def weighted_cross_entropy_plus_dice(y_pred, y_true, num_classes=3):
+def weighted_cross_entropy_plus_dice(y_pred, y_true, num_classes=5):
     loss = weighted_cross_entropy(y_pred, y_true, num_classes) + (-dice_coef_weighted_(y_pred, y_true))
     return loss
 
@@ -121,7 +132,7 @@ def weighted_cross_entropy_plus_dice_multihead(y_pred_liver, y_true_liver, y_pre
     return loss
 
 
-def loss_new(logits, trn_labels_batch,num_classes):
+def loss_new(logits, trn_labels_batch,num_classes=5):
     logits=tf.reshape(logits, (-1, num_classes))
     trn_labels=tf.reshape(trn_labels_batch, [-1, num_classes])
     cross_entropy=  tf.nn.softmax_cross_entropy_with_logits(logits = logits, labels = trn_labels)
@@ -129,7 +140,7 @@ def loss_new(logits, trn_labels_batch,num_classes):
     return loss
 
 
-def make_train_op(logits, trn_labels_batch, learning, momentum, nesterov, num_classes):
+def make_train_op(logits, trn_labels_batch, learning, momentum, nesterov, num_classes=5):
     global_step = tf.train.get_or_create_global_step()
     loss = loss_new(logits,trn_labels_batch,num_classes) + (-dice_coef_weighted_(logits, trn_labels_batch))
     train_op=tf.train.AdamOptimizer(learning).minimize(loss,global_step=global_step)

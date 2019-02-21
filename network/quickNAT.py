@@ -71,7 +71,7 @@ def dense_block(input_dense, training):
     
     return output_feature_map  # 256,256,64
 
-def quick_nat(X, training, num_classes=3):
+def quick_nat(X, training, num_classes=5):
     """
        QuickNAT Network 
        Args:

@@ -84,6 +84,7 @@ def split_dataset(labels, dataset="liver_spleen"):
     if dataset == "liver_spleen":
         label_liver_spleen = np.copy(np.array(labels))
         for label in label_liver_spleen:
+            print(label.shape)
             # indexed array
             for i in range(4, 12):
                 label[0, :, :][label[0, :, :] == i] = 1
@@ -122,13 +123,16 @@ def split_dataset(labels, dataset="liver_spleen"):
 
 
 def one_hot_encode(label, num_classes):
-    if (num_classes == 3):
-        label[label == label.max()] = 3
-        label[label == 6] = 2
-        label[label == 8] = 2
-        label_ohe = (np.arange(num_classes) == np.array(label)[..., None] - 1).astype(int)
+    if num_classes == 5:
+        label[label==255]=5 # vdc
+        label[label==192]=4 # csf
+        label[label==64]=3 # greymatter
+        label[label==128]=2 # whitematter
+        label[label==0]=1 # background
+        label_ohe = (np.arange(num_classes) == np.array(label)[..., None] - 1).astype(int) 
     else:
-        label_ohe = (np.arange(num_classes) == np.array(label)[..., None] - 1).astype(int)
+        label_ohe = (np.arange(num_classes) == np.array(label)[..., None] - 1).astype(int) # check -1 
+
     return label_ohe
 
 
@@ -171,7 +175,7 @@ list_index = 0
 len_entries = 0
 
 
-def data_generator(batch_size, data, labels, num_classes, data_aug=False, center_crop=True, test_data=False):
+def data_generator(batch_size, data, labels, num_classes = 5, data_aug=False, center_crop=True, test_data=False):
     global global_index
     global list_index
     global len_entries
@@ -179,8 +183,8 @@ def data_generator(batch_size, data, labels, num_classes, data_aug=False, center
         list_index = 0
         global_index = 0
 
-    X = np.zeros(shape=(batch_size, 192, 192, 1), dtype=np.float32)
-    Y = np.zeros(shape=(batch_size, 192, 192), dtype=np.float32)
+    X = np.zeros(shape=(batch_size, 256, 256, 1), dtype=np.float32) #256 was 192
+    Y = np.zeros(shape=(batch_size, 256, 256), dtype=np.float32) # 256 was 192
 
 
     while True:
@@ -200,8 +204,8 @@ def data_generator(batch_size, data, labels, num_classes, data_aug=False, center
             random.Random(4).shuffle(entries_list)
            
         for n, i in enumerate(entries_list[list_index:]):
-            X[batch_index] = centeredCrop(data[i].reshape(1, 256, 256), 192, 192).reshape(192, 192, 1)
-            Y[batch_index] = centeredCrop(labels[i].reshape(1, 256, 256), 192, 192).reshape(192, 192)
+            X[batch_index] = centeredCrop(data[i].reshape(1, 256, 256), 256, 256).reshape(256, 256, 1)
+            Y[batch_index] = centeredCrop(labels[i].reshape(1, 256, 256), 256, 256).reshape(256, 256)
             batch_index += 1
             
             if batch_index == batch_size:
