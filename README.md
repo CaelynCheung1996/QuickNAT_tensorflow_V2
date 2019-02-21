@@ -17,3 +17,15 @@ Link to paper: https://arxiv.org/abs/1801.04161
 - Provide the code to remap the labels of [OASIS dataset](https://www.oasis-brains.org/) in order to reduce the total number of classes.
 - Provide the code to calculate the class weights for the weighted_cross_entrophy.
 - Add more comments on the original tensorflow code to help understand. 
+
+### Simple to Run!
+### Training
+After activating Tensorflow environment, simply run
+'''
+python3 training.py 
+'''
+
+### Testing
+'''
+python3 testing.py
+'''
