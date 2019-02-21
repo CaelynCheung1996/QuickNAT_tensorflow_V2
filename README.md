@@ -21,23 +21,24 @@ Link to paper: https://arxiv.org/abs/1801.04161
 Simple to run!
 ----------------------------
 ### Run in cluster
-### Request a interative CHPC GPU node
+
+Request a interative CHPC GPU node
 ```
 qsub -I -l nodes=1:ppn=1:gpus=1:V100,walltime=1:00:00
 ```
-### Load the module for CUDA, Sigularity and run tensorflow
+Load the module for CUDA, Sigularity and run tensorflow
 ```
 module load cuda-8.0
 module load singularity-2.4.2
 singularity exec --nv /export/tensorflow-1.7.0/test/ubuntu_tf_gpu python3 /home/caelyn/QuickNAT_tensorflow/training.py
 ```
 ### Run in local machine
-### Training
+
 After activating Tensorflow environment, simply run
 ```
 python3 training.py 
 ```
-### Testing
+Testing
 ```
 python3 testing.py
 ```
