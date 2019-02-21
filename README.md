@@ -13,7 +13,7 @@ Link to paper: https://arxiv.org/abs/1801.04161
 - Pytorch Implementation is contributed by [Shayan Ahmad Siddiqui](https://github.com/ai-med/quickNAT_pytorch)
 
 ### Changes
-- Add the matlab code create_wholedataset.m to build imdb structure for this project. 
-- Provide the code to remap the labels of OASIS data in order to reduce the total number of classes.
+- Add the matlab code create_wholedataset.m to build imdb structure for any nifti formats dataset. 
+- Provide the code to remap the labels of [OASIS dataset](https://www.oasis-brains.org/) in order to reduce the total number of classes.
 - Provide the code to calculate the class weights for the weighted_cross_entrophy.
 - Add more comments on the original tensorflow code to help understand. 
