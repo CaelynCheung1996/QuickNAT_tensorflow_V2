@@ -26,7 +26,7 @@ Simple to run!
 ```
 qsub -I -l nodes=1:ppn=1:gpus=1:V100,walltime=1:00:00
 ```
-- Load the module for CUDA, Sigularity and run tensorflow
+- Load the module for CUDA, Singularity and run tensorflow
 ```
 module load cuda-8.0
 module load singularity-2.4.2
