@@ -45,7 +45,7 @@ python3 testing.py
 
 Troubleshooting
 -------------------
-- The error was shown as 'Unable to create file (file locking disabled on this file system (use HDF5_USE_FILE_LOCKING environment variable to override)' can be solved by adding the flag:
+- The error was shown as 'Unable to create file (file locking disabled on this file system, use HDF5_USE_FILE_LOCKING environment variable to override)' can be solved by adding the flag:
 ```
 export HDF5_USE_FILE_LOCKING=FALSE
 ```
