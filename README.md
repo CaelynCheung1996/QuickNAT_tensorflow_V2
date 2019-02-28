@@ -12,6 +12,8 @@ Link to paper: https://arxiv.org/abs/1801.04161
 
 - Pytorch Implementation is contributed by [Shayan Ahmad Siddiqui](https://github.com/ai-med/quickNAT_pytorch)
 
+You can request the OASIS 30 dataset with manual labels in [MICCAI 2012 Grand Challenge on Multi-Atlas Labeling](https://docs.google.com/forms/d/e/1FAIpQLSfwkdSt7hWo_tjHUDu2stDsxWTaWyLJIUiS_iapbtKaydEMIw/viewform)
+
 ### Changes
 - Add the matlab code create_wholedataset.m to build imdb structure for any nifti formats dataset. 
 - Provide the code to remap the labels of [OASIS dataset](https://www.oasis-brains.org/) in order to reduce the total number of classes.
