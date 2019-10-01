@@ -17,7 +17,8 @@ train_filepath = '/home/caelyn/imdbTraining.mat'
 
 # load dataset
 train_data, train_labels = read_dataset(filepath=train_filepath, file_for="train")
-train_data = train_data.reshape(train_data.shape[0], train_data.shape[2], train_data.shape[3], train_data.shape[1]) # (NumOfData, height, weight, channel=1 for grayscale data)
+# (NumOfSlice, height, weight, channel=1 for grayscale data)
+train_data = train_data.reshape(train_data.shape[0], train_data.shape[2], train_data.shape[3], train_data.shape[1])
 print(train_data.shape)
 #  preprocessing data
 train_labels = train_labels[:, 0, :, :] #squeeze train_labels to 3D (channel eliminated)
