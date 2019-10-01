@@ -59,6 +59,4 @@ imdb.images.label = label ;
 % imdb.images.set = set ;
 
 fprintf('\n***** imdb.mat has been created! *****\n');
-% encapsulate this part when you work with test data(start)
 save('imdbTraining.mat', 'imdb', '-v7.3'); 
-% save('imdbTesting.mat', 'imdb', '-v7.3'); 
