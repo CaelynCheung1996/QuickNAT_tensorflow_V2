@@ -1,7 +1,7 @@
 %% IMDB CREATER
 % Xiaohui Zhang, Jan 24th, 2019
-% imdb.images.data is a 4D matrix of size: [height, width, channel, NumberOfData]
-% imdb.images.labels is a 4D matrix of size: [height, width, 2, NumberOfData] 
+% imdb.images.data is a 4D matrix of size: [height, width, channel, NumOfSlice]
+% imdb.images.labels is a 4D matrix of size: [height, width, 2, NumOfSlice] 
 % ---> 1st Channel is class (1,2,... etc), 2nd channel is Instance Weights 
 % (All voxels with a class label is assigned a weight, details in paper)
 % imdb.images.set is [1,NumberOfData] vector with entries 1 or 3 indicating 
