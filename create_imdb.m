@@ -13,6 +13,10 @@ clc;
 clear all;
 % read image files in the folder
 % define the path to images
+% image width and height
+nVx = 256;
+nVy = 256;
+
 filelist_images = dir('/home/xiaohui8/Downloads/QuickNAT_tensorflow_V2-master/dataset/images/');
 NumOfFile_images = length(filelist_images)-2; % number of nii.gz files
 NumOfSlice_images = 256; % z-slice number
@@ -37,10 +41,10 @@ for i = 1:NumOfFile_labels
 end
 
 % Preallocate memory 
-data = zeros(256, 256, channel, NumOfFile_images*NumOfSlice_images) ; % [height, width, channel, NumberOfData]
+data = zeros(nVy, nVx, channel, NumOfFile_images*NumOfSlice_images) ; % [height, width, channel, NumberOfData]
 
 % encapsulate this part when you work with test data(start)
-label = zeros(256, 256, channel, NumOfFile_labels*NumOfSlice_labels) ; % [height, width, channel, NumberOfData]
+label = zeros(nVy, nVx, channel, NumOfFile_labels*NumOfSlice_labels) ; % [height, width, channel, NumberOfData]
 
 % Read image
 for k = 1:NumOfFile_images
@@ -48,8 +52,8 @@ for k = 1:NumOfFile_images
     label_im = niftiread(filename_labels{k}) ;   
     for n = 1:NumOfSlice_images
         % Store images in imdb structure
-        data(:,:,1,(k-1)*256+n) = single(squeeze(train_im(:,:,n)));
-        label(:,:,1,(k-1)*256+n) = single(squeeze(label_im(:,:,n)));
+        data(:,:,1,(k-1)*NumOfSlice_images+n) = single(squeeze(train_im(:,:,n)));
+        label(:,:,1,(k-1)*NumOfSlice_labels+n) = single(squeeze(label_im(:,:,n)));
     end
 end
 
