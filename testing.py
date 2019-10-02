@@ -17,8 +17,8 @@ test_filepath = '/home/caelyn/imdbTesting.mat'
 
 # Load test images
 test_data, test_labels = read_dataset(filepath=test_filepath, file_for="train")
-test_data = test_data.reshape(test_data.shape[0], test_data.shape[2], test_data.shape[3], test_data.shape[1])# (NumOfData, height, weight, channel=1 for grayscale data
-
+# (NumOfData, height, weight, channel=1) for grayscale data
+test_data = test_data.reshape(test_data.shape[0], test_data.shape[2], test_data.shape[3], test_data.shape[1])
 #scipy.misc.imsave('outfile.jpg', test_data[150].reshape(256,256))
 
 
