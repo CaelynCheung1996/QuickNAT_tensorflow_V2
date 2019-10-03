@@ -37,8 +37,9 @@ def read_dataset(filepath, file_for="train"):
     if file_for == "test":
         with h5py.File(filepath, 'r') as file:
             dataset = np.array(file['imdb']['images']['data'])
-            labels = np.array(file['imdb']['images']['label'])
-        return dataset, labels
+            # labels = np.array(file['imdb']['images']['label'])
+        #return dataset, labels
+        return dataset
     else:
         error_msg = "file_for should be for train or test only"
         return error_msg
